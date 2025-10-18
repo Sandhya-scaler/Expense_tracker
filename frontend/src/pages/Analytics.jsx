@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../config/axios';
 import { FiTrendingUp, FiPieChart, FiBarChart2 } from 'react-icons/fi';
 import {
   PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip,

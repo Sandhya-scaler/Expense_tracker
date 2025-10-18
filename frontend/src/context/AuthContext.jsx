@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../config/axios';
 import toast from 'react-hot-toast';
 
 const AuthContext = createContext();
@@ -20,7 +20,6 @@ export const AuthProvider = ({ children }) => {
     const userInfo = localStorage.getItem('userInfo');
     if (userInfo) {
       setUser(JSON.parse(userInfo));
-      axios.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(userInfo).token}`;
     }
     setLoading(false);
   }, []);
@@ -29,7 +28,6 @@ export const AuthProvider = ({ children }) => {
     try {
       const { data } = await axios.post('/api/users/login', { email, password });
       localStorage.setItem('userInfo', JSON.stringify(data.data));
-      axios.defaults.headers.common['Authorization'] = `Bearer ${data.data.token}`;
       setUser(data.data);
       toast.success('Login successful!');
       return data;
@@ -43,7 +41,6 @@ export const AuthProvider = ({ children }) => {
     try {
       const { data } = await axios.post('/api/users/register', { name, email, password });
       localStorage.setItem('userInfo', JSON.stringify(data.data));
-      axios.defaults.headers.common['Authorization'] = `Bearer ${data.data.token}`;
       setUser(data.data);
       toast.success('Registration successful!');
       return data;
@@ -55,7 +52,6 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem('userInfo');
-    delete axios.defaults.headers.common['Authorization'];
     setUser(null);
     toast.success('Logged out successfully');
   };
