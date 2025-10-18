@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
@@ -17,7 +18,7 @@ connectDB();
 
 // Middleware
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: process.env.FRONTEND_URL,
   credentials: true,
   optionsSuccessStatus: 200
 };
